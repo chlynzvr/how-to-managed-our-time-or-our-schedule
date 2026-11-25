@@ -1,7 +1,7 @@
 # Asramaku
 (Edisi Siswa SMA) — Pengatur Jadwal & Rutinitas Boarding School
 
-**AsramaSync** adalah aplikasi web ringan berbasis klien (*client-side*) yang dirancang khusus untuk **siswa SMA DHARMA WANITA 1 PARE** agar mampu menyeimbangkan jadwal pelajaran sekolah, ekstrakurikuler, jam belajar malam wajib (*prep*), piket kamar, serta aturan jam malam asrama.
+**Asramaku      ** adalah aplikasi web ringan berbasis klien (*client-side*) yang dirancang khusus untuk **siswa SMA DHARMA WANITA 1 PARE** agar mampu menyeimbangkan jadwal pelajaran sekolah, ekstrakurikuler, jam belajar malam wajib (*prep*), piket kamar, serta aturan jam malam asrama.
 
 ## Masalah Siswa SMA di Asrama yang Diselesaikan
 1. **Lupa Jadwal Seragam & Buku Pelajaran:** Transisi cepat dari kegiatan asrama ke jam masuk sekolah sering membuat siswa salah memakai seragam atau tertinggal buku.
