@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AsramaSync Conquest — Pengatur Jadwal & Quest Siswa SMA</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-content">
+      <div>
+        <h1>AsramaSync <small class="badge-mode">Conquest Mode</small></h1>
+        <p class="subtitle" id="uniformBanner">Memuat info seragam hari ini...</p>
+      </div>
+      <div class="header-right">
+        <div class="quest-hud">
+          <div class="level-pill" id="levelBadge">Lv. 1 • Cadette</div>
+          <div class="xp-bar-wrap">
+            <div class="xp-bar-fill" id="xpBarFill"></div>
+          </div>
+          <small id="xpText">0 / 100 XP • Streak 0 hari</small>
+        </div>
+        <div class="clock-box">
+          <span id="liveClock">00:00:00</span>
+          <small id="liveDate">Memuat tanggal...</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container grid-layout">
+    <section class="sidebar">
+      <div class="card curfew-card">
+        <div class="card-header">
+          <h2>Batas Jam Malam / Kumpul HP</h2>
+          <input type="time" id="curfewTimeInput" value="21:00" title="Atur Batas Jam Malam / Kumpul Gawai">
+        </div>
+        <p class="curfew-countdown" id="curfewCountdown">-- jam -- menit lagi</p>
+        <span class="badge badge-safe" id="curfewStatus">Aman • Masih waktu belajar/istirahat</span>
+      </div>
+
+      <div class="card">
+        <h2>Papan Conquest (Misi & Badge)</h2>
+        <ul id="questList" class="quest-list"></ul>
+      </div>
+
+      <div class="card">
+        <h2>Tambah Quest / Jadwal</h2>
+        <form id="scheduleForm">
+          <div class="form-group">
+            <label for="taskTitle">Nama Quest / Kegiatan</label>
+            <input type="text" id="taskTitle" placeholder="Contoh: Selesaikan PR Fisika / Piket Kamar" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="startTime">Mulai</label>
+              <input type="time" id="startTime" required>
+            </div>
+            <div class="form-group">
+              <label for="endTime">Selesai</label>
+              <input type="time" id="endTime" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="category">Kategori</label>
+              <select id="category">
+                <option value="Pelajaran Sekolah">Pelajaran Sekolah</option>
+                <option value="Wajib Asrama">Wajib Asrama</option>
+                <option value="Ekskul & OSIS">Ekskul & OSIS</option>
+                <option value="Piket">Piket</option>
+                <option value="Pribadi">Pribadi</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="xpReward">Hadiah XP</label>
+              <select id="xpReward">
+                <option value="20">+20 XP (Ringan)</option>
+                <option value="35" selected>+35 XP (Standar)</option>
+                <option value="50">+50 XP (Berat)</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Tambah ke Conquest</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Antrean Fasilitas Kamar</h2>
+        <p class="hint">Booking slot mandi atau setrika agar tidak bentrok dengan teman sekamar.</p>
+        <form id="facilityForm" class="inline-form">
+          <input type="text" id="roommateName" placeholder="Nama (mis. Raka)" required>
+          <select id="facilitySlot">
+            <option value="05:00 - 05:20 (Kamar Mandi 1)">05:00 - 05:20 (Kamar Mandi 1)</option>
+            <option value="05:20 - 05:40 (Kamar Mandi 2)">05:20 - 05:40 (Kamar Mandi 2)</option>
+            <option value="16:30 - 17:00 (Setrika Seragam)">16:30 - 17:00 (Setrika Seragam)</option>
+            <option value="20:30 - 21:15 (Mesin Cuci)">20:30 - 21:15 (Mesin Cuci)</option>
+          </select>
+          <button type="submit" class="btn btn-secondary">Booking Slot</button>
+        </form>
+        <ul id="facilityList" class="facility-list"></ul>
+      </div>
+    </section>
+
+    <section class="main-content">
+      <div class="card">
+        <div class="timeline-header">
+          <div>
+            <h2>Timeline Quest Harian</h2>
+            <p class="hint" id="progressText">0 dari 0 quest selesai</p>
+          </div>
+          <div class="filter-group">
+            <select id="filterCategory">
+              <option value="Semua">Semua Kategori</option>
+              <option value="Pelajaran Sekolah">Pelajaran Sekolah</option>
+              <option value="Wajib Asrama">Wajib Asrama</option>
+              <option value="Ekskul & OSIS">Ekskul & OSIS</option>
+              <option value="Piket">Piket</option>
+              <option value="Pribadi">Pribadi</option>
+            </select>
+            <button id="resetTemplateBtn" class="btn btn-outline">Reset Template SMA</button>
+          </div>
+        </div>
+
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progressBar"></div>
+        </div>
+
+        <div id="conflictAlert" class="alert hidden">
+          ⚠️ <strong>Peringatan Jadwal Bentrok:</strong> Ada quest yang waktunya bertabrakan. Cek tanda merah di bawah.
+        </div>
+
+        <div id="scheduleList" class="schedule-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
